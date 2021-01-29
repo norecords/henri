@@ -1,0 +1,16 @@
+body {
+    background-color:#191d21;
+    color:#d3d3d3;
+}
+.jumbotron {
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align:right;
+}
+a {
+    color:#adadad;
+}
+a:hover {
+	color: #878787;
+	text-decoration: underline;
+}
