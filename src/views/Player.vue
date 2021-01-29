@@ -8,6 +8,7 @@
     Search
     </button>
     </div>
+    <transition name="fade">
     <div v-if="showSearch" class="row">
         <div class="col-12">
             <div class="card bg-dark">
@@ -64,7 +65,7 @@
             </div>
         </div>
     </div>
-
+    </transition>
     <transition name="fade">
       <div v-if="show">
         <PlayerProfile v-bind:id="id" />
@@ -75,6 +76,7 @@
 
 <script>
 import PlayerProfile from '../components/PlayerProfile'
+import { debounce } from 'lodash'
 export default {
   components: { PlayerProfile },
   data () {
@@ -113,6 +115,15 @@ export default {
         // eslint-disable-next-line no-console
           console.log(err)
         })
+    }
+  },
+  created () {
+    this.debounceName = debounce(this.search, 1000)
+  },
+  watch: {
+    term () {
+      if (!this.term) return
+      this.debounceName()
     }
   }
 }

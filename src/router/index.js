@@ -1,7 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router"
 import Home from "@/views/Home.vue"
 import About from "@/views/About.vue"
-import Player from "@/views/Player.vue"
+
+function loadView (view) {
+  return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
+}
 
 const routes = [
   {
@@ -17,7 +20,7 @@ const routes = [
   {
     path: "/player",
     name: "Player",
-    component: Player
+    component: loadView('Player')
   }
 ]
 
