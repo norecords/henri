@@ -34,7 +34,13 @@
   </div>
 
   <div class="container">
-    <router-view />
+
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in" appear>
+          <component :is="Component" />
+      </transition>
+    </router-view>
+  
   </div>
 
      <div class="mt-5">
@@ -86,5 +92,14 @@ export default {
 </script>
 
 <style>
-
+.fade-enter-active {
+  transition: opacity 1.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 </style>

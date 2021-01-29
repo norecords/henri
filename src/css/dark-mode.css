@@ -9,8 +9,15 @@ body {
 }
 a {
     color:#adadad;
+    text-decoration: none;
 }
 a:hover {
 	color: #878787;
 	text-decoration: underline;
 }
+.nav-link:hover, .navbar-brand:hover {
+    text-decoration: none;
+}
+.urlpointer {
+    cursor: pointer;
+  }
