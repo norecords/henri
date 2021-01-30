@@ -38,13 +38,12 @@ export default {
   },
   mounted () {
     this.$route.query.id ? this.loadProfile(this.$route.query.id) : this.showSearch = true
-  
   },
     methods: {
     searchButton () {
       this.showSearch = !this.showSearch
       if (this.$route.query.id) this.$router.push({ path: '/player', query: ''})
-      this.show = !this.show  
+      this.show = !this.show 
     },
     loadProfile (value) {
       this.id = value
