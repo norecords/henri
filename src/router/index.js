@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from "vue-router"
-import Home from "@/views/Home.vue"
 import About from "@/views/About.vue"
 
 // Lazy Loading views chunk vendors.js and gain in app optimization
@@ -12,7 +11,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: loadView('Home')
   },
   {
     path: "/about",

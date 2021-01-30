@@ -65,15 +65,40 @@ export default {
       players: {},
       playerFound: '',
       term: '',
+      results: [],
+      noResults: []
     }
   },
     methods: {
     loadProfile: function (id) {
-      this.$emit('playerid', id)
-      this.$router.push({
-        path: '/player',
-        query: {
+      console.log('loading profile: ' + id)
+      if (this.searching === false) {
+        this.noResults = false
+        this.results = []
+        this.$store.commit('playerData', this.results)
+      }
+      this.searching = true
+      this.$api.get('https://cigalestrike.norecords.org/vue/apiv3.php', {
+        params: {
+          q: 'profile',
           id: id
+        }
+      })
+      .then((response) => {
+        this.searching = false
+        this.noResults = response.data.success
+        if (this.noResults === true) {
+          this.$store.commit('playerData', response.data)
+          this.$emit('playerid', id)
+          this.$router.push({
+            path: '/player',
+            query: {
+              id: id
+            }
+          })
+        } else {
+          this.results = []
+          this.$store.commit('playerData', this.results)
         }
       })
     },
