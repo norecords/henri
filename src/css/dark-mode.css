@@ -18,6 +18,12 @@ a:hover {
 .nav-link:hover, .navbar-brand:hover {
     text-decoration: none;
 }
+.list-group-item {
+    background-color: transparent;
+}
+.list-group-item-dark {
+    color: #d3d3d3;
+}
 .urlpointer {
     cursor: pointer;
   }

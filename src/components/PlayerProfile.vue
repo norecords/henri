@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="this.profile.summary" class="row mt-3">
+    <div v-if="profile.summary" class="row mt-3">
         <div class="col-lg-8">
         <!-- Player profile table -->
         <table
@@ -10,20 +10,23 @@
             <tr>
             <th style="border-right:0px;"><h4>Player Profile</h4></th>
             <th class="text-right" style="border-left:0px;">
-                
-                <h4>Add user</h4>
-            
+              <a
+                id="addUser"
+                v-bind:href="profile.summary.addfriend"
+              >
+                <h4><fa-icon icon="user-plus" /></h4>
+              </a>
             </th>
             </tr>
         </thead>
         <tbody>
           <tr>
             <td class="col-4 font-weight-bold">
-              {{ this.profile.summary.lastName }}
+              {{ profile.summary.lastName }}
             </td>
             <td class="align-middle col-4" rowspan="5">
               <img
-                v-bind:src="this.profile.summary.avatar"
+                v-bind:src="profile.summary.avatar"
                 class="img-fluid img-avatar rounded mx-auto d-block"
                 id="avatar"
                 title="Avatar"
@@ -41,16 +44,16 @@
                 height="18px"
               />
               -->
-                {{ this.profile.summary.country }}
+                {{ profile.summary.country }}
             </td>
           </tr>
           <tr>
             <td>
-              <!-- <font-awesome-icon :icon="[ 'fab', 'steam' ]" size="lg" /> -->
+              <fa-icon :icon="[ 'fab', 'steam' ]" size="lg" />
               <a
-                v-bind:href="this.profile.summary.steamurl"
+                v-bind:href="profile.summary.steamurl"
               >
-                0:{{ this.profile.summary.uniqueId }}
+                0:{{ profile.summary.uniqueId }}
               </a> 
             </td>
           </tr>
@@ -58,9 +61,9 @@
             <td>Status
               <span
                 class="badge"
-                v-bind:class="classOnlineStatusObject(this.profile.summary.status)"
+                v-bind:class="classOnlineStatusObject(profile.summary.status)"
               >
-                {{ this.profile.summary.status }}
+                {{ profile.summary.status }}
               </span>
             </td>
           </tr>
@@ -68,9 +71,9 @@
             <td>Karma
               <span
                 class="badge"
-                v-bind:class="classKarmaObject(this.profile.summary.hideranking)"
+                v-bind:class="classKarmaObject(profile.summary.hideranking)"
                 >
-                {{ karmaText(this.profile.summary.hideranking) }}
+                {{ karmaText(profile.summary.hideranking) }}
               </span>
             </td>
           </tr>
@@ -78,14 +81,14 @@
             <td>Member of Clan</td>
             <td>
               <span
-                v-if="this.profile.summary.clan === 0"
+                v-if="profile.summary.clan === 0"
               >
                 None
               </span>
               <span
                 v-else
               >
-                {{ this.profile.summary.clan }}
+                {{ profile.summary.clan }}
               </span>
             </td>
           </tr>
@@ -93,9 +96,9 @@
             <td>Real Name</td>
             <td>
               <span
-                v-if="this.profile.summary.fullName"
+                v-if="profile.summary.fullName"
               >
-                {{ this.profile.summary.fullName }}
+                {{ profile.summary.fullName }}
               </span>
               <span
                 v-else
@@ -108,10 +111,10 @@
             <td>E-mail Address</td>
             <td>
               <a
-                v-if="this.profile.summary.email"
-                v-bind:href="'mailto:' + this.profile.summary.email"
+                v-if="profile.summary.email"
+                v-bind:href="'mailto:' + profile.summary.email"
               >
-                {{ email(this.profile.summary.email) }}
+                {{ email(profile.summary.email) }}
               </a>
               <span
                 v-else
@@ -124,10 +127,10 @@
             <td>Home Page</td>
             <td>
               <a
-                v-if="this.profile.summary.homepage"
-                v-bind:href="this.profile.summary.homepage"
+                v-if="profile.summary.homepage"
+                v-bind:href="profile.summary.homepage"
               >
-                {{ homepage(this.profile.summary.homepage) }}
+                {{ homepage(profile.summary.homepage) }}
               </a>
               <span
                 v-else
@@ -150,19 +153,19 @@
           </tr>
           <tr>
             <td>Last Connect</td>
-            <td>{{ lastConnect(this.profile.summary.lastconnect) }}</td>
+            <td>{{ lastConnect(profile.summary.lastconnect) }}</td>
           </tr>
           <tr>
             <td>Total Connection Time</td>
-            <td>{{ connectionTime(this.profile.summary.connection_time) }}</td>
+            <td>{{ connectionTime(profile.summary.connection_time) }}</td>
           </tr>
           <tr>
             <td>Average Ping</td>
             <td>
               <span
-                v-if="this.profile.summary.avgping"
+                v-if="profile.summary.avgping"
               >
-                {{ this.profile.summary.avgping }} ms
+                {{ profile.summary.avgping }} ms
               </span>
               <span
                 v-else
@@ -175,9 +178,9 @@
             <td>Favorite Server</td>
             <td>
               <span
-                v-if="this.profile.summary.favserver"
+                v-if="profile.summary.favserver"
               >
-                {{ this.profile.summary.favserver }}
+                {{ profile.summary.favserver }}
               </span>
               <span
                 v-else
@@ -190,9 +193,9 @@
             <td>Favorite Map</td>
             <td>
               <span
-                v-if="this.profile.summary.favmap"
+                v-if="profile.summary.favmap"
               >
-                {{ this.profile.summary.favmap }}
+                {{ profile.summary.favmap }}
               </span>
               <span
                 v-else
@@ -203,14 +206,14 @@
           </tr>
           <tr>
             <td>Favorite Weapon</td>
-            <td>{{ this.profile.summary.favweapon }}</td>
+            <td>{{ profile.summary.favweapon }}</td>
           </tr>
         </tbody>
         </table>
       </div>
     </div>
-    <div id="chartBonuses"></div>
-    <div id="chartWeaponsTop5"></div>
+    <div class="col-12 mb-3" id="chartBonuses"></div>
+    <div class="col-12" id="chartWeaponsTop5"></div>
   </div>
 </template>
 
