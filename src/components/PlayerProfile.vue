@@ -206,14 +206,169 @@
           </tr>
           <tr>
             <td>Favorite Weapon</td>
-            <td>{{ profile.summary.favweapon }}</td>
+            <td>
+              <span
+                v-if="profile.summary.favweapon"
+              >
+                {{ profile.summary.favweapon }}
+                </span>
+              </td>
           </tr>
         </tbody>
         </table>
       </div>
     </div>
-    <div class="col-12 mb-3" id="chartBonuses"></div>
-    <div class="col-12" id="chartWeaponsTop5"></div>
+
+    <div class="row">
+      <div class="col-12 mb-3" id="chartBonuses"></div>
+      <div class="col-12" id="chartWeaponsTop5"></div>
+    </div>
+
+    <div v-if="profile.summary">
+      <div v-if="profile.weapons.success" class="row">
+        <div class="col-12">
+          <h4>Statistiques des armes</h4>
+          <table
+            v-if="profile.weapons.stats.length"
+            v-bind:class="table.class"
+          >
+            <thead>
+              <tr>
+                <th
+                  v-for="item in table.columns.stats"
+                  v-bind:key="item"
+                >
+                  {{ item }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="weapons in profile.weapons.stats"
+                v-bind:key="weapons.smweapon"
+              >
+                <td> <!--
+                  <img
+                    v-bind:src="require(`@/assets/weapons/${weapons.smweapon}.png`)"
+                    id="weapons"
+                    title="weapons"
+                    class="mx-auto d-block"
+                  /> -->
+                </td>
+                <td>
+                    {{ weapons.smshots }}
+                </td>
+                <td>
+                    {{ weapons.smhits }}
+                </td>
+                <td>
+                    {{ weapons.smdamage }}
+                </td>
+                <td>
+                    {{ weapons.smheadshots }}
+                </td>
+                <td>
+                    {{ weapons.smkills }}
+                </td>
+                <td>
+                    {{ weapons.smkdr }}
+                </td>
+                <td>
+                    {{ weapons.smaccuracy }}
+                </td>
+                <td>
+                    {{ weapons.smdhr }}
+                </td>
+                <td>
+                    {{ weapons.smspk }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <span class="alert"
+            v-else
+            variant="danger"
+            show
+          >
+            Not Enought Data!
+          </span>
+        </div>
+        <div class="col-12">
+          <h4>Statistiques des trajectoires</h4>
+          <table
+            v-if="profile.weapons.targets.length"
+            v-bind:class="table.class"
+          >
+            <thead>
+              <tr>
+                <th
+                  v-for="item in table.columns.targets"
+                  v-bind:key="item"
+                >
+                  {{ item }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="weapons in profile.weapons.targets"
+                v-bind:key="weapons.smweapon"
+              >
+                <td> <!--
+                  <img
+                    v-bind:src="require(`@/assets/weapons/${weapons.smweapon}.png`)"
+                    id="weapons"
+                    title="weapons"
+                    class="mx-auto d-block"
+                  /> -->
+                </td>
+                <td>
+                    {{ weapons.smhead }}
+                </td>
+                <td>
+                    {{ weapons.smchest }}
+                </td>
+                <td>
+                    {{ weapons.smstomach }}
+                </td>
+                <td>
+                    {{ weapons.smleftarm }}
+                </td>
+                <td>
+                    {{ weapons.smrightarm }}
+                </td>
+                <td>
+                    {{ weapons.smleftleg }}
+                </td>
+                <td>
+                    {{ weapons.smrightleg }}
+                </td>
+                <td>
+                    {{ weapons.smhits }}
+                </td>
+                <td>
+                    {{ weapons.smleft }}
+                </td>
+                <td>
+                    {{ weapons.smright }}
+                </td>
+                <td>
+                    {{ weapons.smmiddle }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <span class="alert"
+            v-else
+            variant="danger"
+            show
+          >
+            Not Enought Data!
+          </span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -247,7 +402,14 @@ export default {
         headshots: [],
         hits: []
       },
-      chart: undefined
+      chart: undefined,
+      table: {
+        class: 'table table-responsive-lg table-sm table-dark table-striped table-bordered text-right',
+        columns: {
+          stats: ['', 'Shots', 'Hits', 'Damage', 'Headshots', 'Kills', 'Kills / Death', 'Accuracy', 'Damage per Hit', 'Shot per Kill'],
+          targets: ['', 'Head', 'Chest', 'Stomach', 'Left arm', 'Right arm', 'Left leg', 'Right leg', 'Hits', 'Left', 'Right', 'Middle']
+        }
+      }
     }
   },
   mounted () {
@@ -260,11 +422,14 @@ export default {
     })
       .then((response) => {
       this.profile = response.data
+      this.weapons = response.data.weapons
+      console.log(this.profile)
 
       // Manipulate data that needed
       this.profile.summary.steamurl = 'https://steamcommunity.com/profiles/' + this.profile.summary.uniqueId64.substring(2)
       this.profile.summary.addfriend = 'steam://friends/add/' + this.profile.summary.uniqueId64.substring(2)
 
+      if (this.profile.graphs.success === true) {
       // Generate Charts
       for (let i = 0; i < this.profile.graphs.bonus.length; i++) {
             this.bonusdatas.bonuses.push(
@@ -472,6 +637,7 @@ export default {
           this.chart = new Highcharts.stockChart(highchartsOptions)
           // eslint-disable-next-line
           this.chart2 = new Highcharts.chart(top5)
+      } // end of If charts api data 
     })
   },
   methods: {

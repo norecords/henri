@@ -6,7 +6,8 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Hack adding :key to destoy uncollapsed menu on route change-->
+      <div class="navbar-collapse collapse" id="navbarSupportedContent" :key="$route.path">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" id="menuPlay" href="#">Join</a>
@@ -79,9 +80,8 @@
           </div>
         </div>
         <div class="footer-copyright text-center py-3">2020 Copyleft : <a href="https://cigalestrike.norecords.org">Cigale Strike</a>
-        </div>
-      </div>
-  
+    </div>
+  </div>
 </div>
 </template>
 

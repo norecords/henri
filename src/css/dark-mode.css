@@ -3,6 +3,9 @@ body {
     color:#d3d3d3;
 }
 .jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: .3rem;  
     background-size: cover;
     background-repeat: no-repeat;
     text-align:right;

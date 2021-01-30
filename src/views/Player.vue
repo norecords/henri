@@ -9,7 +9,7 @@
     </button>
     </div>
     <transition name="fade">
-      <div v-if="showSearch">
+      <div v-show="showSearch">
         <SearchBox v-on:playerid="loadProfile"/>
       </div>
     </transition>
