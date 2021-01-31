@@ -16,6 +16,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><fa-icon :icon="[ 'fab', 'vuejs' ]" size="lg" /> Vuejs 3.0.0 <span class="badge rounded-pill bg-success">success</span></li>
                 <li class="list-group-item"><fa-icon icon="chart-line" size="lg" /> Highcharts 8.2.2 <span class="badge rounded-pill bg-success">success</span></li>
+                <li class="list-group-item"><fa-icon :icon="[ 'fab', 'bootstrap' ]" size="lg" /> Bootstrap 5.0.0-beta1 <span class="badge rounded-pill bg-success">success</span></li>
                 <li class="list-group-item"><fa-icon :icon="[ 'fab', 'font-awesome' ]" size="lg" /> Font Awesome  5.15 <span class="badge rounded-pill bg-success">success</span></li>
               </ul>
             </p>
@@ -45,11 +46,50 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-12" id="chartServer"></div>
+  </div>
 </div>
 </template>
 
 <script>
-export default {
+import Highcharts from 'highcharts'
+import HighchartsChartTem from 'highcharts/themes/dark-unica'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faJs, faVuejs, faFontAwesome, faGithub, faBootstrap } from '@fortawesome/free-brands-svg-icons'
 
+HighchartsChartTem(Highcharts)
+
+library.add(faChartLine, faBootstrap, faFontAwesome, faGithub, faJs, faVuejs)
+
+export default {
+  mounted () {
+    new Highcharts.chart({
+      chart: {
+          renderTo: 'chartServer'
+      },
+      title: {
+          text: 'Server Stats'
+      },
+      subtitle: {
+          text: 'uptime'
+      },
+      xAxis: {
+          type: 'datetime'
+      },
+      yAxis: {
+          title: {
+          text: 'y title'
+          }
+      },
+      series: [{
+          name: 'uptime',
+          data: [{x: Date.now(), y: 0}],
+          yAxis: 0,
+          visible: false
+      }]
+    })
+  }
 }
 </script>

@@ -3,7 +3,6 @@
     <div class="col-12">
       <h4>Graphiques</h4>
     </div>
-    <div id="failedChart"></div>
     <div class="col-12" id="chartBonuses"></div>
     <div class="col-12 mt-3 mb-3" id="chartWeaponsTop5"></div>
   </div>
@@ -14,11 +13,15 @@ import Highcharts from 'highcharts'
 import stockInit from 'highcharts/modules/stock'
 import HighchartsChartTem from 'highcharts/themes/dark-unica'
 import exportingInit from 'highcharts/modules/exporting'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserPlus, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faSteam } from '@fortawesome/free-brands-svg-icons'
 
 stockInit(Highcharts)
 HighchartsChartTem(Highcharts)
 exportingInit(Highcharts)
 
+library.add(faUserPlus, faChartLine, faSteam)
 export default {
   name: 'PlayerCharts',
   data () {
@@ -36,8 +39,7 @@ export default {
         kills: [],
         headshots: [],
         hits: []
-      },
-      chart: undefined
+      }
     }
   },
   mounted () {
@@ -250,6 +252,32 @@ export default {
         new Highcharts.chart(top5)
     } else {
         console.log('no charts')
+        // eslint-disable-next-line
+        Highcharts.chart({
+        chart: {
+            renderTo: 'chartBonuses'
+        },
+        title: {
+            text: 'Not Enought Data!'
+        },
+        subtitle: {
+            text: this.subtitles
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+            text: 'Bonus'
+            }
+        },
+        series: [{
+            name: 'bonus',
+            data: [{x: Date.now(), y: 0}],
+            yAxis: 0,
+            visible: false
+        }]
+      })
     }
   }
 }

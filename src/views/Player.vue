@@ -1,34 +1,43 @@
 <template>
   <div>
     <div v-if="!showSearch">
-    <button 
-      v-on:click="searchButton"
-      class="btn btn-outline-light"
-    >
-    Search
-    </button>
+      <button 
+        v-on:click="searchButton"
+        class="btn btn-outline-light"
+      >
+      Search
+      </button>
     </div>
-      <div v-show="showSearch">
-        <SearchBox v-on:playerid="loadProfile"/>
+    <div v-show="showSearch">
+      <SearchBox v-on:playerid="loadProfile" />
+    </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="showProfile">
+        <PlayerSummary />
+
+        <PlayerCharts />
+
+        <PlayerStats />
       </div>
-      <div v-if="show">
-        <!-- <PlayerProfile v-bind:id="id" /> -->
-          <PlayerProfile v-bind:id="id" />
-      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import SearchBox from '../components/SearchBox'
-import PlayerProfile from '../components/PlayerProfile'
+import PlayerSummary from '@/components/PlayerSummary'
+import PlayerCharts from '@/components/PlayerCharts'
+import PlayerStats from '@/components/PlayerStats'
 export default {
   components: {
     SearchBox, 
-    PlayerProfile 
+    PlayerSummary,
+    PlayerCharts,
+    PlayerStats
   },
   data () {
     return {
-      show: false,
+      showProfile: false,
       showSearch: false,
       id: ''
     }
@@ -40,11 +49,11 @@ export default {
     searchButton () {
       this.showSearch = !this.showSearch
       if (this.$route.query.id) this.$router.push({ path: '/player', query: ''})
-      this.show = !this.show 
+      this.showProfile = !this.showProfile 
     },
     loadProfile (value) {
       this.id = value
-      this.show = true
+      this.showProfile = true
       this.showSearch = false
       console.log('id: ' + value)
     },
@@ -56,11 +65,8 @@ export default {
         }
       })
       .then((response) => {
-        this.noResults = response.data.success
-        if (this.noResults === true) {
-          this.$store.commit('playerData', response.data)
-          this.show = true
-        }
+        this.$store.commit('playerData', response.data)
+        if (response.data.success) this.showProfile = true
       })
     }
   }

@@ -2,16 +2,16 @@
   <div class="row mt-3">
     <div class="col-lg-8">
     <!-- Player profile table -->
-    <table class="table table-sm table-dark table-striped table-bordered">
+    <table class="table table-sm table-dark table-striped table-bordered align-middle">
       <thead>
         <tr>
           <th style="border-right:0px;"><h4>{{ tableTitleProfile }}</h4></th>
-          <th class="text-right" style="border-left:0px;">
+          <th class="text-end" style="border-left:0px;">
             <a
               id="addUser"
               v-bind:href="steamAddFriends"
             >
-              <h4><fa-icon icon="user-plus" /></h4>
+              <fa-icon icon="user-plus" size="2x" />
             </a>
           </th>
         </tr>
@@ -24,8 +24,7 @@
           <td class="align-middle col-4" rowspan="5">
             <img
               v-bind:src="$store.state.player.summary.avatar"
-              class="img-fluid img-avatar rounded mx-auto d-block"
-              id="avatar"
+              class="img-fluid rounded mx-auto d-block"
               title="Avatar"
             />
           </td>
@@ -318,9 +317,9 @@ export default {
     },
     classOnlineStatusObject: function () {
       return {
-        'badge-danger': this.$store.state.player.summary.status === 'Offline',
-        'badge-success': this.$store.state.player.summary.status === 'Online',
-        'badge-info': this.$store.state.player.summary.status === 'In-game'
+        'bg-danger': this.$store.state.player.summary.status === 'Offline',
+        'bg-success': this.$store.state.player.summary.status === 'Online',
+        'bg-info': this.$store.state.player.summary.status === 'In-game'
       }
     },
     karmaText: function () {
@@ -328,8 +327,8 @@ export default {
     },
     classKarmaObject: function () {
       return {
-        'badge-danger': this.karmaText === 'Banned',
-        'badge-success': this.karmaText === 'In good standing'
+        'bg-danger': this.karmaText === 'Banned',
+        'bg-success': this.karmaText === 'In good standing'
       }
     },
     // Shrink url and mail
