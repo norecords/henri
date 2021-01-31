@@ -3,27 +3,34 @@
     <div class="col-12">
       <h4>Graphiques</h4>
     </div>
-    <div class="col-12" id="chartBonuses"></div>
-    <div class="col-12 mt-3 mb-3" id="chartWeaponsTop5"></div>
+    <div class="col-12">
+        <Highstock :options="bonusOptions" />
+    </div>
+    <div class="col-12 mt-3 mb-3">
+        <Highcharts :options="top5Options" />
+    </div>
   </div>
 </template>
 
 <script>
 import Highcharts from 'highcharts'
-import stockInit from 'highcharts/modules/stock'
-import HighchartsChartTem from 'highcharts/themes/dark-unica'
+import { createHighcharts } from 'vue-highcharts';
+import loadStock from 'highcharts/modules/stock'
 import exportingInit from 'highcharts/modules/exporting'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserPlus, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faSteam } from '@fortawesome/free-brands-svg-icons'
 
-stockInit(Highcharts)
-HighchartsChartTem(Highcharts)
+loadStock(Highcharts)
 exportingInit(Highcharts)
 
 library.add(faUserPlus, faChartLine, faSteam)
 export default {
   name: 'PlayerCharts',
+  components: {
+    Highstock: createHighcharts('Highstock', Highcharts),
+    Highcharts: createHighcharts('Highcharts', Highcharts)
+  },
   data () {
     return {
       graphs: {},
@@ -42,7 +49,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     if (this.$store.state.player.graphs.success === true) {
         for (let i = 0; i < this.$store.state.player.graphs.bonus.length; i++) {
         this.bonusdatas.bonuses.push(
@@ -76,10 +83,7 @@ export default {
         }
         this.bonusdatas.mapPlotlines.push(pline)
         }
-        var highchartsOptions = {
-        chart: {
-            renderTo: 'chartBonuses'
-        },
+        this.bonusOptions = {
         title: {
             text: 'Bonus and Skill'
         },
@@ -184,7 +188,7 @@ export default {
         this.top5datas.headshots.push(this.$store.state.player.graphs.weapons[i].smheadshots)
         this.top5datas.hits.push(this.$store.state.player.graphs.weapons[i].smhits)
         }
-        var top5 = {
+        this.top5Options = {
         chart: {
             renderTo: 'chartWeaponsTop5',
             type: 'column',
@@ -245,40 +249,11 @@ export default {
             name: 'Hits',
             data: this.top5datas.hits
         }]
-        }
-        // eslint-disable-next-line
-        new Highcharts.stockChart(highchartsOptions)
-        // eslint-disable-next-line
-        new Highcharts.chart(top5)
-    } else {
-        console.log('no charts')
-        // eslint-disable-next-line
-        Highcharts.chart({
-        chart: {
-            renderTo: 'chartBonuses'
-        },
-        title: {
-            text: 'Not Enought Data!'
-        },
-        subtitle: {
-            text: this.subtitles
-        },
-        xAxis: {
-            type: 'datetime'
-        },
-        yAxis: {
-            title: {
-            text: 'Bonus'
-            }
-        },
-        series: [{
-            name: 'bonus',
-            data: [{x: Date.now(), y: 0}],
-            yAxis: 0,
-            visible: false
-        }]
-      })
+      }
     }
+  },
+  beforeMount () {
+    return this.bonusOptions, this.top5Options
   }
 }
 </script>

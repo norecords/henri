@@ -47,28 +47,33 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12" id="chartServer"></div>
+    <div class="col-12">
+      <Highcharts :options="chartOptions" />
+    </div>
   </div>
 </div>
 </template>
 
 <script>
 import Highcharts from 'highcharts'
-import HighchartsChartTem from 'highcharts/themes/dark-unica'
+import { createHighcharts } from 'vue-highcharts';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faJs, faVuejs, faFontAwesome, faGithub, faBootstrap } from '@fortawesome/free-brands-svg-icons'
 
-HighchartsChartTem(Highcharts)
-
 library.add(faChartLine, faBootstrap, faFontAwesome, faGithub, faJs, faVuejs)
 
 export default {
-  mounted () {
-    new Highcharts.chart({
-      chart: {
-          renderTo: 'chartServer'
-      },
+  components: {
+    Highcharts: createHighcharts('Highcharts', Highcharts)
+  },
+  data () {
+    return {
+      chartOptions: {}
+    }
+  },
+  created () {
+    this.chartOptions = {
       title: {
           text: 'Server Stats'
       },
@@ -89,7 +94,10 @@ export default {
           yAxis: 0,
           visible: false
       }]
-    })
+    }
+  },
+  beforeMount () {
+    return this.chartOptions
   }
 }
 </script>
