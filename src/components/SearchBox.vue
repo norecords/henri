@@ -26,15 +26,11 @@
                             v-on:click="loadProfile(item.playerId)"
                             class="list-group-item list-group-item-action list-group-item-dark urlpointer"
                         >
-                        <!--
                         <img
-                            v-bind:src="require(`@/assets/flags/${countryFlag(item.flag.toLowerCase())}.png`)"
-                            id="country"
-                            title="Flags"
-                            width="24px"
-                            height="18px"
+                          :src="`img/flags/${item.flag.toLowerCase()}.png`"
+                          class="flags"
+                          title="Flags"
                         />
-                        -->
                         {{item.lastName}}
                         </li>
                     </ul>

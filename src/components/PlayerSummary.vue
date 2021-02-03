@@ -11,7 +11,7 @@
               id="addUser"
               v-bind:href="steamAddFriends"
             >
-              <fa-icon icon="user-plus" size="2x" />
+              <h4><fa-icon icon="user-plus" /></h4>
             </a>
           </th>
         </tr>
@@ -30,14 +30,12 @@
           </td>
         </tr>
         <tr>
-          <td> <!--
+          <td>
             <img
-              v-bind:src="require(`@/assets/flags/${countryFlag}`)"
-              id="country"
+              :src="`img/flags/${countryFlag}`"
+              class="flags"
               title="Flags"
-              width="24px"
-              height="18px"
-            /> -->
+            />
               {{ $store.state.player.summary.country }}
           </td>
         </tr>
@@ -135,12 +133,11 @@
         </tr>
         <tr>
           <td>MM Rank</td>
-          <td> <!--
+          <td>
             <img
-              v-bind:src="require(`@/assets/mmranks/${mmRank}`)"
-              height="20px"
-              width="50px"
-            /> -->
+              :src="`img/mmranks/${mmRank}`"
+              class="mmrank"
+            />
           </td>
         </tr>
         <tr>

@@ -11,17 +11,20 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: loadView('Home')
+    component: loadView('Home'),
+    meta: { title: 'Homepage | Cigale Strike' }
   },
   {
     path: "/about",
     name: "About",
-    component: About
+    component: About,
+    meta: { title: 'About us and this project | Cigale Strike' }
   },
   {
     path: "/player",
     name: "Player",
-    component: loadView('Player')
+    component: loadView('Player'),
+    meta: { title: 'Player Profile | Cigale Strike' }
   }
 ]
 

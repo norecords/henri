@@ -22,13 +22,13 @@
               v-for="weapons in $store.state.player.weapons.stats"
               v-bind:key="weapons.smweapon"
             >
-              <td> <!--
+              <td>
                 <img
-                  v-bind:src="require(`@/assets/weapons/${weapons.smweapon}.png`)"
+                  :src="`img/csgo/weapons/${weapons.smweapon}.png`"
                   id="weapons"
                   title="weapons"
                   class="mx-auto d-block"
-                /> -->
+                />
               </td>
               <td>
                   {{ weapons.smshots }}
@@ -90,13 +90,13 @@
               v-for="weapons in $store.state.player.weapons.targets"
               v-bind:key="weapons.smweapon"
             >
-              <td> <!--
+              <td>
                 <img
-                  v-bind:src="require(`@/assets/weapons/${weapons.smweapon}.png`)"
+                  v-bind:src="`img/csgo/weapons/${weapons.smweapon}.png`"
                   id="weapons"
                   title="weapons"
                   class="mx-auto d-block"
-                /> -->
+                />
               </td>
               <td>
                   {{ weapons.smhead }}

@@ -87,7 +87,15 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  watch: {
+    $route: {
+        immediate: true,
+        handler(to) {
+            document.title = to.meta.title || 'Cigale Strike';
+        }
+    }
+  }
 }
 </script>
 
