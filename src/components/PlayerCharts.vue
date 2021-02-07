@@ -3,11 +3,23 @@
     <div class="col-12">
       <h4>Graphiques</h4>
     </div>
-    <div class="col-12">
+    <div
+      v-if="show"
+      class="col-12"
+    >
         <Highstock :options="bonusOptions" />
     </div>
-    <div class="col-12 mt-3 mb-3">
+    <div
+      v-if="show"
+      class="col-12 mt-3 mb-3"
+    >
         <Highcharts :options="top5Options" />
+    </div>
+    <div
+      v-else
+      class="col-12 mb-3"
+    >
+        <Highcharts :options="defaultOptions" />
     </div>
   </div>
 </template>
@@ -33,6 +45,8 @@ export default {
   },
   data () {
     return {
+      bonusOptions: {},
+      top5Options: {},
       graphs: {},
       bonusdatas: {
         bonuses: [],
@@ -46,11 +60,35 @@ export default {
         kills: [],
         headshots: [],
         hits: []
+      },
+      show: false,
+      defaultOptions: {
+        title: {
+          text: 'Not Enought Data!'
+        },
+        subtitle: {
+          text: this.subtitles
+        },
+        xAxis: {
+          type: 'datetime'
+        },
+        yAxis: {
+          title: {
+          text: 'Bonus'
+          }
+        },
+        series: [{
+          name: 'bonus',
+          data: [{x: Date.now(), y: 0}],
+          yAxis: 0,
+          visible: false
+        }]
       }
     }
   },
   created () {
     if (this.$store.state.player.graphs.success === true) {
+        this.show = true
         for (let i = 0; i < this.$store.state.player.graphs.bonus.length; i++) {
         this.bonusdatas.bonuses.push(
             {x: this.$store.state.player.graphs.bonus[i].timestamp * 1000, y: this.$store.state.player.graphs.bonus[i].bonus, map: this.$store.state.player.graphs.bonus[i].map}
@@ -250,6 +288,8 @@ export default {
             data: this.top5datas.hits
         }]
       }
+    } else {
+        this.show = false
     }
   },
   beforeMount () {
