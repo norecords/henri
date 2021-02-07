@@ -27,14 +27,3 @@ a:hover {
 .list-group-item-dark {
     color: #d3d3d3;
 }
-.urlpointer {
-    cursor: pointer;
-}
-.flags {
-    width: 24px;
-    height: 18px;
-}
-.mmrank {
-    height: 20px;
-    width: 50px;
-}

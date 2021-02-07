@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import Highcharts from 'highcharts';
 import VueHighcharts from 'vue-highcharts';
-import router from './router'
-import store from './store'
+import router from './router/router'
+import store from './store/store'
 import axios from 'axios'
 import 'bootstrap'
 import '@/scss/custom.scss'
