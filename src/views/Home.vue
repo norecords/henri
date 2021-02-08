@@ -23,7 +23,7 @@
         </div>
         <div class="card-footer">
             Follow us on 
-            <a href="https://github.com/norecords/henri-vuejs3/" target="_blank">
+            <a href="https://github.com/norecords/henri/" target="_blank">
               <fa-icon :icon="[ 'fab', 'github' ]" size="lg" />
             </a>
         </div>

@@ -7,18 +7,20 @@
         <tr>
           <th style="border-right:0px;"><h4>{{ tableTitleProfile }}</h4></th>
           <th class="text-end" style="border-left:0px;">
+            <h5>
             <a
               id="addUser"
               v-bind:href="steamAddFriends"
             >
-              <h4><fa-icon icon="user-plus" /></h4>
+              <fa-icon icon="user-plus" />
             </a>
+            </h5>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="col-4 font-weight-bold">
+          <td class="col-4 fw-bold text-break">
             {{ $store.state.player.summary.lastName }}
           </td>
           <td class="align-middle col-4" rowspan="5">
@@ -74,6 +76,7 @@
           <td>
             <span
               v-if="$store.state.player.summary.clan === 0"
+              class="fst-italic"
             >
               None
             </span>
@@ -89,11 +92,13 @@
           <td>
             <span
               v-if="$store.state.player.summary.fullName"
+              class="text-break"
             >
               {{ $store.state.player.summary.fullName }}
             </span>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -105,11 +110,13 @@
             <a
               v-if="$store.state.player.summary.email"
               v-bind:href="'mailto:' + $store.state.player.summary.email"
+              class="text-break"
             >
-              {{ email }}
+              {{ $store.state.player.summary.email }}
             </a>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -121,11 +128,13 @@
             <a
               v-if="$store.state.player.summary.homepage"
               v-bind:href="$store.state.player.summary.homepage"
+              class="text-break"
             >
-              {{ homepage }}
+              {{ shrinkUrl }}
             </a>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -158,6 +167,7 @@
             </span>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -173,6 +183,7 @@
             </span>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -188,6 +199,7 @@
             </span>
             <span
               v-else
+              class="fst-italic"
             >
               None
             </span>
@@ -206,7 +218,7 @@
       <thead>
         <tr>
           <th colspan="2">
-            <h4>Résumé des statistiques</h4>
+            <h4>Stats Summary</h4>
           </th>
         </tr>
       </thead>
@@ -295,11 +307,15 @@
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSteam } from '@fortawesome/free-brands-svg-icons'
+library.add(faUserPlus, faSteam)
 export default {
   name: 'PlayerSummary',
   data () {
     return {
-      tableTitleProfile: 'Profile du joueur'
+      tableTitleProfile: 'Player\'s profile'
     }
   },
   computed: {
@@ -328,20 +344,9 @@ export default {
         'bg-success': this.karmaText === 'In good standing'
       }
     },
-    // Shrink url and mail
-    shrinkEmail: function () {
-      var u = this.$store.state.player.summary.email
-      return u.length > 25 ? u.trim(u).substring(0, 22).slice(0, -1) + '...' : u
-    },
+    // Shrink url
     shrinkUrl: function () {
-      var u = this.$store.state.player.summary.homepage.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').split('/')[0]
-      return u.length > 25 ? u.trim(u).substring(0, 22).slice(0, -1) + '...' : u
-    },
-    email: function () {
-      return this.$store.state.player.summary.email != null ? this.shrinkEmail : 'None'
-    },
-    homepage: function () {
-      return this.$store.state.player.summary.homepage != null ? this.shrinkUrl : 'None'
+      return this.$store.state.player.summary.homepage.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').split('/')[0]
     },
     mmRank: function () {
       return typeof (this.$store.state.player.mmrank) === 'undefined' ? '0.png' : this.$store.state.player.mmrank + '.png'

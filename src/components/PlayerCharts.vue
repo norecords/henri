@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <h4>Graphiques</h4>
+      <h4><fa-icon icon="chart-line" /> Charts</h4>
     </div>
     <div
       v-if="show"
@@ -30,13 +30,12 @@ import { createHighcharts } from 'vue-highcharts';
 import loadStock from 'highcharts/modules/stock'
 import exportingInit from 'highcharts/modules/exporting'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserPlus, faChartLine } from '@fortawesome/free-solid-svg-icons'
-import { faSteam } from '@fortawesome/free-brands-svg-icons'
+import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 
 loadStock(Highcharts)
 exportingInit(Highcharts)
 
-library.add(faUserPlus, faChartLine, faSteam)
+library.add(faChartLine)
 export default {
   name: 'PlayerCharts',
   components: {

@@ -44,50 +44,18 @@
   
   </div>
 
-     <div class="mt-5">
-        <div class="container-fluid text-center text-md-start">
-          <div class="row">
-            <div class="col-md-6 mt-md-0 mt-3">
-              <h5 class="text-uppercase">cigale strike</h5>
-              <p>slogan</p>
-            </div>
-            <div class="col-md-3 mb-md-0 mb-3">
-              <h5 class="text-uppercase">Status</h5>
-              <ul class="list-unstyled">
-                <li>Serveur CS : <a id="lastPing" title="" class="badge rounded-pill bg-success" href="steam://connect/"><span id="onlineStatus">En ligne</span></a></li>
-                <li>Statistiques  : <a class="badge rounded-pill bg-success" href="">En ligne</a></li>
-                <li>Nb. de joueur : <span id="nbPlayers"></span></li>
-                <li>Carte actuelle : <span id="actMap"></span></li>
-              </ul>
-            </div>
-            <div class="col-md-3 mb-md-0 mb-3">
-              <h5 class="text-uppercase">Site</h5>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#!wiki">Wiki</a>
-                </li>
-                <li>
-                  <a href="#!faq">FAQ</a>
-                </li>
-                <li>
-                  <a href="./mentions.html">Mentions légales</a>
-                </li>
-                <li>
-                  <a href="./cgu.html">CGU</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="footer-copyright text-center py-3">2020 Copyleft : <a href="https://cigalestrike.norecords.org">Cigale Strike</a>
-    </div>
-  </div>
-</div>
+  <Footer />
+
+</div>  
 </template>
 
 <script>
+import Footer from './components/Footer'
 export default {
   name: 'App',
+  components: {
+    Footer
+  },
   watch: {
     $route: {
         immediate: true,
